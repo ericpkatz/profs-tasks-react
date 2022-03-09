@@ -1,13 +1,25 @@
 import React from 'react';
 import Create from './Create';
+import store from './store';
 
-const Header = ({ tasks, create })=> {
+
+class Header extends React.Component{
+  constructor(){
+    super();
+    this.state = store.getState();
+  }
+  componentDidMount(){
+    store.subscribe(()=> this.setState(store.getState()));
+  }
+  render(){
+    const tasks = this.state.tasks;
     return (
       <div>
         <h1>Prof Tasks ({tasks.length})</h1>
-        <Create create={ create } />
+        <Create />
       </div>
     );
+  }
 }
 
 export default Header;

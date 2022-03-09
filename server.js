@@ -59,7 +59,7 @@ app.get('/api/tasks', async(req, res, next)=>{
   try {
     setTimeout(async()=> {
       res.send( await Task.findAll());
-    }, 1000);
+    }, 250);
   }
   catch(ex){
     next(ex);

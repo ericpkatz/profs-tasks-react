@@ -1,15 +1,26 @@
 import React from 'react';
-import Create from './Create';
+import store from './store';
 
-const Loader = ({ loading })=> {
-  if(!loading){
-    return null;
+
+class Loader extends React.Component{
+  constructor(){
+    super();
+    this.state = store.getState();
   }
+  componentDidMount(){
+    store.subscribe(()=> this.setState(store.getState()));
+  }
+  render(){
+    const loading = this.state.loading;
+    if(!loading){
+      return null;
+    }
     return (
       <div>
         .....loading
       </div>
     );
+  }
 }
 
 export default Loader;
