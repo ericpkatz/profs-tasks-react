@@ -14,9 +14,9 @@ class App extends React.Component{
   render(){
     return (
       <div>
+        <Loader />
         <Header />
         <Tasks />
-        <Loader />
       </div>
     );
   }

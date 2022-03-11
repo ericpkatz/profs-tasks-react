@@ -1,26 +1,15 @@
 import React from 'react';
-import store from './store';
+import connect from './connect';
 
-
-class Loader extends React.Component{
-  constructor(){
-    super();
-    this.state = store.getState();
+const Loader = ({ loading })=> {
+  if(!loading){
+    return null;
   }
-  componentDidMount(){
-    store.subscribe(()=> this.setState(store.getState()));
-  }
-  render(){
-    const loading = this.state.loading;
-    if(!loading){
-      return null;
-    }
-    return (
-      <div>
-        .....loading
-      </div>
-    );
-  }
+  return (
+    <div>
+      .....loading
+    </div>
+  );
 }
 
-export default Loader;
+export default connect(Loader);
