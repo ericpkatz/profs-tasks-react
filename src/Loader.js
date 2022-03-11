@@ -1,5 +1,5 @@
 import React from 'react';
-import connect from './connect';
+import { connect } from 'react-redux';
 
 const Loader = ({ loading })=> {
   if(!loading){
@@ -12,4 +12,4 @@ const Loader = ({ loading })=> {
   );
 }
 
-export default connect(Loader);
+export default connect(state => state)(Loader);

@@ -1,6 +1,6 @@
 import React from 'react';
 import Create from './Create';
-import connect from './connect';
+import { connect }  from 'react-redux';
 
 const Header = ({ tasks })=> {
   return (
@@ -11,5 +11,7 @@ const Header = ({ tasks })=> {
   );
 };
 
-
-export default connect(Header);
+const mapStateToProps = function(state){
+  return state;
+};
+export default connect(state => state)(Header);

@@ -1,18 +1,21 @@
 import React from 'react';
 import axios from 'axios';
-import store from './store';
+import { connect } from 'react-redux';
 
 
-const create = async()=> {
-  const response = await axios.post('/api/tasks');
-  store.dispatch({ type: 'CREATE_TASK', task: response.data });
-
-};
-
-const Create = ()=> {
+const Create = ({ create })=> {
   return (
     <button onClick={ create }>Create</button>
   );
 }
 
-export default Create;
+const mapDispatch = (dispatch)=> {
+  return {
+    create: async()=> {
+      const response = await axios.post('/api/tasks');
+      dispatch({ type: 'CREATE_TASK', task: response.data });
+    }
+  };
+};
+
+export default connect(null, mapDispatch)(Create);

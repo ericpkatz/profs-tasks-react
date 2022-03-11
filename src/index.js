@@ -5,6 +5,7 @@ import Tasks from './Tasks';
 import Header from './Header'
 import Loader from './Loader';
 import store from './store';
+import { Provider } from 'react-redux';
 
 class App extends React.Component{
   async componentDidMount(){
@@ -22,4 +23,4 @@ class App extends React.Component{
   }
 }
 const root = document.querySelector('#root');
-ReactDOM.render(<App />, root);
+ReactDOM.render(<Provider store={ store }><App /></Provider>, root);
