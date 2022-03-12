@@ -1,6 +1,6 @@
 import React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
+import { createTask } from './store';
 
 
 const Create = ({ create })=> {
@@ -12,8 +12,7 @@ const Create = ({ create })=> {
 const mapDispatch = (dispatch)=> {
   return {
     create: async()=> {
-      const response = await axios.post('/api/tasks');
-      dispatch({ type: 'CREATE_TASK', task: response.data });
+      await dispatch(createTask());
     }
   };
 };

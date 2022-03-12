@@ -1,4 +1,6 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import axios from 'axios';
 
 const tasksReducer = (state = [], action)=> {
   if(action.type === 'SET_TASKS'){
@@ -25,6 +27,35 @@ const reducer = combineReducers({
   users: usersReducer
 });
 
+
+const fetchTasks = (dispatch)=> {
+  return async()=> {
+    let response = await axios.get('/api/tasks');
+    store.dispatch({ type: 'SET_TASKS', tasks: response.data});
+  };
+};
+
+const fetchUsers = ()=> {
+  return async(dispatch)=> {
+    let response = await axios.get('/api/users');
+    store.dispatch({ type: 'SET_USERS', users: response.data});
+  };
+};
+
+const createTask = ()=> {
+  return async(dispatch)=> {
+    const response = await axios.post('/api/tasks');
+    dispatch({ type: 'CREATE_TASK', task: response.data });
+  };
+};
+
+const destroyTask = (task)=> {
+  return async(dispatch)=> {
+    await axios.delete(`/api/tasks/${task.id}`);
+    dispatch({ type: 'DESTROY_TASK', task });
+  };
+};
+
 /*
 const reducer = (state = { users: [], tasks: []}, action)=> {
   if(action.type === 'SET_TASKS'){
@@ -45,6 +76,7 @@ const reducer = (state = { users: [], tasks: []}, action)=> {
 };
 */
 
-const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(thunk));
 
+export { fetchTasks, fetchUsers, createTask, destroyTask };
 export default store;
