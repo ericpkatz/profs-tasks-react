@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 const Create = ({ create })=> {
   return (
-    <button onClick={ create }>Create</button>
+    <button onClick={ create }>Create A Task</button>
   );
 }
 

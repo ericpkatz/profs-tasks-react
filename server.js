@@ -1,6 +1,12 @@
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize(process.env.DATABASE_URL || 'postgres://localhost/profs_task_db');
 
+const User = sequelize.define('user', {
+  name: {
+    type: Sequelize.STRING
+  }
+});
+
 const Task = sequelize.define('task', {
   name: {
     type: Sequelize.STRING
@@ -57,8 +63,21 @@ app.put('/api/tasks/:id', async(req, res, next)=>{
 
 app.get('/api/tasks', async(req, res, next)=>{
   try {
+    //create a delay to see loader
     setTimeout(async()=> {
       res.send( await Task.findAll());
+    }, 250);
+  }
+  catch(ex){
+    next(ex);
+  }
+});
+
+app.get('/api/users', async(req, res, next)=>{
+  try {
+    //create a delay to see loader
+    setTimeout(async()=> {
+      res.send( await User.findAll());
     }, 250);
   }
   catch(ex){
@@ -73,7 +92,11 @@ const init = async()=> {
     await Promise.all([
       Task.generateRandom(),
       Task.generateRandom(),
-      Task.generateRandom()
+      Task.generateRandom(),
+      User.create({ name: 'moe'}),
+      User.create({ name: 'lucy'}),
+      User.create({ name: 'ethyl'}),
+      User.create({ name: 'fred'})
     ]);
 
     const port = process.env.PORT || 3000;

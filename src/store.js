@@ -1,9 +1,11 @@
 import { createStore } from 'redux';
 
-const reducer = (state = { loading: true, tasks: []}, action)=> {
-  console.log(action);
+const reducer = (state = { users: [], tasks: []}, action)=> {
   if(action.type === 'SET_TASKS'){
-    state = {...state, tasks: action.tasks, loading: false};
+    state = {...state, tasks: action.tasks};
+  }
+  if(action.type === 'SET_USERS'){
+    state = {...state, users: action.users };
   }
   if(action.type === 'CREATE_TASK'){
     const tasks = [...state.tasks, action.task];
