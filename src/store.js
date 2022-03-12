@@ -1,5 +1,31 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 
+const tasksReducer = (state = [], action)=> {
+  if(action.type === 'SET_TASKS'){
+    return action.tasks;
+  }
+  if(action.type === 'CREATE_TASK'){
+    return [...state, action.task];
+  }
+  if(action.type === 'DESTROY_TASK'){
+    return state.filter(task => task.id !== action.task.id); 
+  }
+  return state;
+};
+
+const usersReducer = (state = [], action)=> {
+  if(action.type === 'SET_USERS'){
+    return action.users;
+  }
+  return state;
+};
+
+const reducer = combineReducers({
+  tasks: tasksReducer,
+  users: usersReducer
+});
+
+/*
 const reducer = (state = { users: [], tasks: []}, action)=> {
   if(action.type === 'SET_TASKS'){
     state = {...state, tasks: action.tasks};
@@ -17,6 +43,7 @@ const reducer = (state = { users: [], tasks: []}, action)=> {
   }
   return state;
 };
+*/
 
 const store = createStore(reducer);
 
