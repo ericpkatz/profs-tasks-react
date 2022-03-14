@@ -1,7 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import axios from 'axios';
 import { connect } from 'react-redux';
+import { destroyTask } from './store';
 
 const Tasks = ({ tasks, destroy })=> { 
   return (
@@ -27,8 +26,7 @@ const mapState = (state)=> {
 const mapDispatch = (dispatch)=> {
   return {
     destroy: async(task)=> {
-      await axios.delete(`/api/tasks/${task.id}`);
-      dispatch({ type: 'DESTROY_TASK', task });
+      await dispatch(destroyTask(task));
     }
   };
 };
